@@ -2,11 +2,11 @@
     "IncludeJS" jQuery plugin
 
     This is a straightforward plug-in that allows you to dynamically load templates (for
-    underscore, defined as <script type='text/template'> blocks) and .js files. It is not
+    underscore, defined as `<script type='text/template'>` blocks) and .js files. It is not
     like RequireJS where the loaded .js files are treated as modules. It is understood that
     what you load will be defined in the global namespace.
 
-    Personally, I used it to avoid having to load all of my `Backbone.View` files all at once
+    Personally, I used it to avoid having to load all of my `Backbone.View` files at once
     on the main page. This way I can spread them out to where they are needed.
 
     Note that it does NOT load .css files, as that turned out to be a nasty mess to get
@@ -18,7 +18,7 @@
 
     * http://jquery.com/
     * http://underscorejs.org - for templates
-    * http://eleventyone.github.io/jquery.gettype/jquery.gettype.js - for $.gettype()
+    * http://eleventyone.github.io/jquery.gettype/ - for $.gettype()
 
     Methods/Usage:
     --------------
