@@ -6,7 +6,7 @@
     like RequireJS where the loaded .js files are treated as modules. It is understood that
     what you load will be defined in the global namespace.
 
-    Personally, I used it to avoid having to load all of my `Backbone.View` files all at once
+    Personally, I used it to avoid having to load all of my `Backbone.View` files at once
     on the main page. This way I can spread them out to where they are needed.
 
     Note that it does NOT load .css files, as that turned out to be a nasty mess to get

@@ -29,7 +29,7 @@
       <section>
         <p>This is a straightforward plug-in that allows you to dynamically load templates (for underscore, defined as <code>&lt;script type='text/template'&gt;</code> blocks) and .js files. It is not like RequireJS where the loaded .js files are treated as modules. It is understood that what you load will be defined in the global namespace.</p>
 
-<p>Personally, I used it to avoid having to load all of my <code>Backbone.View</code> files all at once on the main page. This way I can spread them out to where they are needed.</p>
+<p>Personally, I used it to avoid having to load all of my <code>Backbone.View</code> files at once on the main page. This way I can spread them out to where they are needed.</p>
 
 <p>Note that it does NOT load .css files, as that turned out to be a nasty mess to get working, so you will have to do that manually on the main page for all .js files that require it.</p>
 
@@ -45,12 +45,13 @@
 </ul>
 
 <h3>
-<a id="methodsusage" class="anchor" href="#methodsusage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods/Usage:</h3>
+<a id="methodsusage" class="anchor" href="#methodsusage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Members/Methods:</h3>
 
-<pre><code>$.includejs.options = {...}
-$.includejs.include({...});
-$.includejs.getTemplate("...");
-</code></pre>
+<ul>
+<li>$.includejs.options = {...}</li>
+<li>$.includejs.include({...});</li>
+<li>$.includejs.getTemplate("...");</li>
+</ul>
 
 <h3>
 <a id="source" class="anchor" href="#source" aria-hidden="true"><span class="octicon octicon-link"></span></a>Source:</h3>
@@ -65,7 +66,67 @@ $.includejs.getTemplate("...");
 <h3>
 <a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example:</h3>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>template.view.menu.tpl.htm</p>
+
+<pre><code>&lt;script type="text/template" id="tpl-menu"&gt;
+  ... content ...
+&lt;/script&gt;
+</pre></code>
+
+<p>view.menu.js</p>
+
+<pre><code>// this only highlights the code relevant to IncludeJS, obviously
+// much more is required to write a proper Backbone.View
+
+var MenuView = Backbone.View.extend({
+
+  ... content ...
+
+  initialize : function(...) {
+    this.templates["tpl-menu"] = $.includejs.getTemplate("tpl-menu",{});
+  },
+
+  render : function() {
+    this.$el.html(this.templates["tpl-menu"]);
+    return this;
+  }
+
+});
+</pre></code>
+
+<p>app.js</p>
+
+<pre><code>// settings should be initialized once only, except for perhaps the cache parameter.
+
+$.includejs.settings.ROOT = "";
+$.includejs.settings.TPL_PATH = "_inc/tpl/";
+$.includejs.settings.JS_PATH = "_inc/js/";
+$.includejs.settings.cache = false;
+
+// called everytime you want to stream in one or more files.
+
+$.includejs.include({
+  
+  tpl : ["template.view.menu"],
+  js : ["view.menu"],
+  
+  waiting : function() {
+    console.log("Loading template(s) and javascript file(s)...");
+  },
+
+  success : function() {
+    view = new MenuView(...);
+    view.render();
+  },
+
+  error : function(options,jqXHR,textStatus,errorThrown) {
+    console.log("Failed.");
+  }
+});
+
+... code continues, callbacks executed when appropriate...
+
+</code></pre>
       </section>
     </div>
     <footer>
